@@ -53,25 +53,8 @@ class AdvancedBot(commands.Bot):
         """Return the bot's prefix for a guild or a DM"""
         await bot.wait_until_ready()
 
-        if os.getenv("DEV") == "1":
-            DEFAULT_PREFIX = "!"
-        else:
-            DEFAULT_PREFIX = "%"
-
-        prefixes = [DEFAULT_PREFIX]
-
-        if message.guild is None:
-            return prefixes
-
-        # TODO: Use this if you want saved prefixes
-        # saved_prefixes = await bot.pool.fetch(
-        #     "SELECT prefix FROM guild_prefix WHERE guild_id = $1",
-        #     message.guild.id,
-        # )
-        # if saved_prefixes:
-        #     prefixes = [prefix["prefix"] for prefix in saved_prefixes]
-
-        return prefixes
+        DEFAULT_PREFIX = "!" if os.getenv("DEV") == "1" else "%"
+        return [DEFAULT_PREFIX]
 
     async def get_context(
         self,
